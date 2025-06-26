@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:PointFinder.ViewModels"
+             xmlns:models="clr-namespace:PointFinder.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PointFinder.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+<StackPanel Margin="20">
+  <StackPanel Orientation="Horizontal" Spacing="10">
+    <TextBox Width="100" Watermark="Point A" Text="{Binding NewPointA, UpdateSourceTrigger=PropertyChanged}" />
+    <TextBox Width="100" Watermark="Point B" Text="{Binding NewPointB, UpdateSourceTrigger=PropertyChanged}" />
+    <TextBox Width="100" Watermark="Distance" Text="{Binding NewDistance, UpdateSourceTrigger=PropertyChanged}" />
+    <Button Content="Add" Command="{Binding AddMeasurementCommand}" />
+  </StackPanel>
+<ItemsControl ItemsSource="{Binding Measurements}">
+    <ItemsControl.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBox Width="50" Text="{Binding PointA, Mode=TwoWay}" />
+                <TextBox Width="50" Text="{Binding PointB, Mode=TwoWay}" />
+                <TextBox Width="70" Text="{Binding Distance, Mode=TwoWay}" />
+            </StackPanel>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
+</ItemsControl>
+</StackPanel>
+</UserControl>
