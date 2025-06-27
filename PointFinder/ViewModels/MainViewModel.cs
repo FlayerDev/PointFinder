@@ -20,15 +20,29 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private double newDistance;
 
+
+    [ObservableProperty]
+    private string newPoint;
+    [ObservableProperty]
+    private double newXPosition;
+    [ObservableProperty]
+    private double newYPosition;
+
     public ICommand AddMeasurementCommand { get; }
+    public ICommand AddLocationCommand { get; }
     public ICommand CalculateCommand { get; }
 
     public MainViewModel()
     {
         AddMeasurementCommand = new RelayCommand(AddMeasurement);
         CalculateCommand = new RelayCommand(Calculate);
+        AddLocationCommand = new RelayCommand(AddLocation);
         NewPointA = string.Empty;
         NewPointB = string.Empty;
+        NewDistance = 0.0;
+        NewPoint = string.Empty;
+        NewXPosition = 0.0;
+        NewYPosition = 0.0;
         resultText = "Awaiting for measurements...";
     }
 
@@ -40,10 +54,18 @@ public partial class MainViewModel : ViewModelBase
         NewDistance = 0.0;
     }
 
+    private void AddLocation()
+    {
+        Locations.Add(new InitialPosition(NewPoint, NewXPosition, NewYPosition));
+        NewPoint = string.Empty;
+        NewXPosition = 0.0;
+        NewYPosition = 0.0;
+    }
+
     private void Calculate()
     {
         ResultText = "Calculating coordinates...\n";
-        List<PointEstimate> pointEstimates = CoordinateSolver.EstimateCoordinates(Measurements);
+        List<PointEstimate> pointEstimates = CoordinateSolver.EstimateCoordinates(Measurements, Locations);
         ResultText = $"Found {pointEstimates.Count} points:\n\n";
         foreach (var estimate in pointEstimates)
         {
@@ -53,8 +75,17 @@ public partial class MainViewModel : ViewModelBase
 
     public ObservableCollection<DistanceMeasurement> Measurements { get; } = new ObservableCollection<DistanceMeasurement>
     {
-        new DistanceMeasurement("A", "B", 12.5),
-        new DistanceMeasurement("B", "C", 7.3),
-        new DistanceMeasurement("C", "D", 5.8)
+        new DistanceMeasurement("A", "B", 373.5),
+        new DistanceMeasurement("B", "C", 476.3),
+        new DistanceMeasurement("C", "D", 373.6),
+        new DistanceMeasurement("C", "A", 293),
+        new DistanceMeasurement("B", "D", 293.9)
+    };
+    public ObservableCollection<InitialPosition> Locations { get; } = new ObservableCollection<InitialPosition>
+    {
+        new InitialPosition("A", 0, 0),
+        new InitialPosition("B", 1, 0),
+        new InitialPosition("C", 0, 0),
+        new InitialPosition("A", 0, 0),
     };
 }

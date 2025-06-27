@@ -1,5 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-
 namespace PointFinder.Models;
 
 using CommunityToolkit.Mvvm.ComponentModel;

@@ -13,14 +13,13 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <StackPanel Orientation="Horizontal" Margin="20">
-    <StackPanel Margin="20,20,20,20">
+  <StackPanel Orientation="Horizontal" Margin="10">
+    <StackPanel Margin="10,10,10,10">
       <StackPanel Orientation="Horizontal" Spacing="10">
         <TextBox Width="100" Watermark="Point A" Text="{Binding NewPointA, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Width="100" Watermark="Point B" Text="{Binding NewPointB, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Width="100" Watermark="Distance" Text="{Binding NewDistance, UpdateSourceTrigger=PropertyChanged}" />
         <Button Content="Add" Command="{Binding AddMeasurementCommand}" />
-        <Button Content="Calculate" Command="{Binding CalculateCommand}" />
       </StackPanel>
       <ItemsControl ItemsSource="{Binding Measurements}">
           <ItemsControl.ItemTemplate>
@@ -34,7 +33,31 @@
           </ItemsControl.ItemTemplate>
       </ItemsControl>
     </StackPanel>
-        <TextBox Width="350"
+
+
+    <StackPanel Margin="10,10,10,10">
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <TextBox Width="100" Watermark="Point" Text="{Binding NewPoint, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Width="100" Watermark="X Position" Text="{Binding NewXPosition, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Width="100" Watermark="Y Position" Text="{Binding NewYPosition, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Content="Add" Command="{Binding AddLocationCommand}" />
+      </StackPanel>
+      <ItemsControl ItemsSource="{Binding Locations}">
+          <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                  <StackPanel Orientation="Horizontal" Spacing="8">
+                      <TextBox Width="50" Text="{Binding Point, Mode=TwoWay}" />
+                      <TextBox Width="50" Text="{Binding XPosition, Mode=TwoWay}" />
+                      <TextBox Width="50" Text="{Binding YPosition, Mode=TwoWay}" />
+                  </StackPanel>
+              </DataTemplate>
+          </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      <Button Content="Calculate" Command="{Binding CalculateCommand}" Margin="0,10,0,0" />
+    </StackPanel>
+
+
+        <TextBox Width="250"
          Height="400"
          AcceptsReturn="True"
          HorizontalAlignment="Left"
